@@ -1,0 +1,38 @@
+{
+    "version": 1,
+    "disable_existing_loggers": false,
+    "formatters": {
+        "simple": {
+            "format": "%(asctime)s %(levelname)s [%(name)s] [%(user)s] %(message)s"
+        }
+    },
+    "filters": {
+        "context": {
+            "()": "smurf.logutils.ContextFilter"
+        }
+    },
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "level": "DEBUG",
+            "formatter": "simple",
+            "stream": "ext://sys.stdout",
+            "filters": ["context"]
+        },
+
+        "file_handler": {
+            "class": "logging.handlers.TimedRotatingFileHandler",
+            "level": "DEBUG",
+            "formatter": "simple",
+            "filename": "/var/log/smurf/smurf.log",
+            "when": "D",
+            "backupCount": 60,
+            "encoding": "utf8",
+            "filters": ["context"]
+        }
+    },
+    "root": {
+        "level": "DEBUG",
+        "handlers": ["console", "file_handler"]
+    }
+}
